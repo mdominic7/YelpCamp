@@ -1,0 +1,36 @@
+<!-- even partials/header has all the returned objects -->
+<%include ../partials/header%>
+
+
+
+	<div class="container">
+		<header class="jumbotron">
+			<!-- to beautify the edges in mobile view -->
+			<div class="container">
+
+				<h1>Welcome to camp grounds page</h1>
+				<!-- tagline -->
+				<p>where the dreams visualize!</p>
+			</div>
+		</header>
+		
+		<div class="row text-center" style="display: flex; flex-wrap:wrap; ">
+		<%campgrounds.forEach(function (camp) {%>
+
+			<div class="col-md-3 col-sm-6">
+				
+<!-- remember these objects have other parameters like _id ,etc. -->
+				<div class="thumbnail">
+					<img src="<%=camp.image%>">	
+					<div class="caption">
+						<h3><%=camp.name%></h3>
+					</div>
+					<p><a class="btn btn-info btn-md" href="/campgrounds/<%=camp._id%>">More Info!</a></p>
+				</div>	
+			</div>
+		<%});%>
+		</div>
+		<h3><a class="btn-primary btn-lg" href="/campgrounds/new">hold On! would you like to add your own?</a></h3>
+	</div>
+<%include ../partials/footer%>	
+

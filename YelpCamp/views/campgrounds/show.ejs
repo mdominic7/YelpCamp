@@ -1,0 +1,91 @@
+
+<%include ../partials/header%>
+
+<a class="btn btn-sm btn-danger" href="/campgrounds">go back</a>	
+<div class="container">
+
+	
+	
+	<div class="row" >
+		
+	<!-- for the side bar -->
+		<div class="col-md-3">
+			<h2>Yelp</h2>
+			<div class="list-group">
+				  <a href="#" class="list-group-item active">
+				    Cras justo odio
+				  </a>
+				  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+				  <a href="#" class="list-group-item">Morbi leo risus</a>
+				  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+				  <a href="#" class="list-group-item">Vestibulum at eros</a>
+			</div>
+			<h2>Ends</h2>
+		</div>
+
+		<!-- for the main content -->
+		<div class="col-md-9 text">
+			<h1 class="mainpageheading">Here's the Camp!</h1>
+			<div class="thumbnail">	
+				<img class="img-responsive" src="<%= campDetails.image%>">
+				
+				<div class="caption">
+					<h2 class="pull-right">$/night </h2>
+					<h2><%=campDetails.name%></h2>
+					<h4>Submitted by <%=campDetails.author.username%></h4>
+					
+				<div>
+					<p><%=campDetails.desc%></p>
+					<!-- <a class="btn btn-danger">Delete Campground</a> -->
+					<!-- delete/DESTROY campground -->
+					
+					<!-- show these buttons only if user is autorized/owns campground -->
+				
+				<%if(currentUser && campDetails.author.id.equals(currentUser._id)){%>	
+					<a class="btn btn-warning pull-right" href="/campgrounds/<%= campDetails._id%>/edit">Edit Campground</a>
+				
+					<form action="/campgrounds/<%= campDetails._id%>?_method=DELETE" method= "POST">
+						
+						<button class="btn btn-danger">Delete campground</button>
+					</form>
+				<% }%>
+				</div>
+				
+				</div>
+				
+			</div>	
+
+		</div>
+		<!-- comments well class gives grey border-->
+		<!-- this is there to push comments well under the image thumbnail -->
+		<div class=col-md-3></div>
+
+		<div class="col-md-9 thumbnail well well-lg">
+		<div class="caption">	
+			<strong><h4>Comments Section</h4></strong>		
+			<a class="btn btn-success pull-right" href="/campgrounds/<%=campDetails._id%>/comments/new">Add comment</a>
+			<%campDetails.comments.forEach(function(comment){%>
+				<div class="row">
+				<div class="col-md-12">
+					<h3><%=comment.author.username%></h3>
+					<span class="pull-right">10 days ago</span>
+					<p><%=comment.text%></p>
+					
+					<!-- allow delete and edit only if authorized -->
+				<%if(currentUser && comment.author.id.equals(currentUser._id)){%>
+					<a href="/campgrounds/<%=campDetails._id%>/comments/<%=comment._id%>/edit" class="btn btn-warning pull-right updel">Edit</a>
+					<!-- delete comment -->
+					<form action="/campgrounds/<%=campDetails._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+						<button class="btn btn-danger pull-right updel">Delete</button>
+					</form>
+				<% }%>	
+				</div>
+			</div><hr>
+			<%});%>
+		</div>
+	</div>
+	</div>
+	
+
+</div>
+<%include ../partials/footer%>	
